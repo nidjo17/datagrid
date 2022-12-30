@@ -9,6 +9,7 @@ use Nette\Forms\Container;
 use Nette\Forms\Controls\SelectBox;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\Forms\Form as NetteForm;
+use Ublaboo\DataGrid\Column\Action;
 use Ublaboo\DataGrid\DataGrid;
 use Ublaboo\DataGrid\Exception\DataGridGroupActionException;
 
@@ -140,12 +141,18 @@ class GroupActionCollection
 					strtolower($this->datagrid->getFullName()) . 'group_action_submit'
 				);
 
-			$container->addSubmit('submit', 'ublaboo_datagrid.execute')
+			$submit = $container->addSubmit('submit', 'ublaboo_datagrid.execute')
 				->setValidationScope([$container])
 				->setAttribute(
 					'id',
 					strtolower($this->datagrid->getFullName()) . 'group_action_submit'
 				);
+
+			$confirmationDialog = $this->datagrid->getGroupActionsConfirmDialog();
+			if ($confirmationDialog !== null && $confirmationDialog !== '') {
+				$submit->setHtmlAttribute('data-' . Action::$dataConfirmAttributeName, $confirmationDialog);
+				$submit->setHtmlAttribute('data-group-action', 'true');
+			}
 		} else {
 			unset($container['group_action']);
 		}

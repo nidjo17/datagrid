@@ -432,6 +432,11 @@ class DataGrid extends Control
 	/**
 	 * @var string|null
 	 */
+	protected $groupActionsConfirmDialog;
+
+	/**
+	 * @var string|null
+	 */
 	private $customPaginatorTemplate = null;
 
 	/**
@@ -3230,6 +3235,16 @@ class DataGrid extends Control
 		$this->customPaginatorTemplate = $templateFile;
 	}
 
+
+	public function setGroupActionsConfirmDialog(string $confirmDialog): void
+	{
+		$this->groupActionsConfirmDialog = $confirmDialog;
+	}
+
+	public function getGroupActionsConfirmDialog(): ?string
+	{
+		return $this->groupActionsConfirmDialog;
+	}
 
 	protected function createSorting(array $sort, ?callable $sortCallback = null): Sorting
 	{
