@@ -28,6 +28,11 @@ class GroupActionCollection
 	 */
 	protected $datagrid;
 
+	/**
+	 * @var string|null
+	 */
+	protected $groupActionsConfirmDialog = null;
+
 
 	public function __construct(DataGrid $datagrid)
 	{
@@ -148,9 +153,8 @@ class GroupActionCollection
 					strtolower($this->datagrid->getFullName()) . 'group_action_submit'
 				);
 
-			$confirmationDialog = $this->datagrid->getGroupActionsConfirmDialog();
-			if ($confirmationDialog !== null && $confirmationDialog !== '') {
-				$submit->setHtmlAttribute('data-' . Action::$dataConfirmAttributeName, $confirmationDialog);
+			if ($this->groupActionsConfirmDialog !== null) {
+				$submit->setHtmlAttribute('data-' . Action::$dataConfirmAttributeName, $this->groupActionsConfirmDialog);
 				$submit->setHtmlAttribute('data-group-action', 'true');
 			}
 		} else {
@@ -307,6 +311,11 @@ class GroupActionCollection
 	}
 
 
+	public function setGroupActionsConfirmDialog(string $confirmDialog): void
+	{
+		$this->groupActionsConfirmDialog = $confirmDialog;
+	}
+
 	private function getFormSubmitter(NetteForm $form): ?SubmitButton
 	{
 		$container = $form['group_action'];
@@ -333,4 +342,5 @@ class GroupActionCollection
 
 		return null;
 	}
+
 }
