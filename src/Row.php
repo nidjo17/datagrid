@@ -110,6 +110,12 @@ class Row
 		}
 
 		if ($this->item instanceof \ArrayAccess) {
+			if (is_object($this->item->{$key})) {
+				try {
+					return $this->getDoctrineEntityProperty($this->item, $key);
+				} catch (\Throwable $exception) {}
+			}
+
 			return $this->item->{$key};
 		}
 
