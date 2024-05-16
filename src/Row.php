@@ -109,6 +109,10 @@ class Row
 			return $arrayValue;
 		}
 
+		if ($this->item instanceof \ArrayAccess) {
+			return $this->item->{$key};
+		}
+
 		return $this->getDoctrineEntityProperty($this->item, $key);
 	}
 
